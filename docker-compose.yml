@@ -1,0 +1,9 @@
+services:
+  chat-api:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    # depends_on:
+    #   - db
