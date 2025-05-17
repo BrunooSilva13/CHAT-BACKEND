@@ -1,3 +1,19 @@
+"""
+main.py - Módulo principal da API de chat
+
+Este arquivo define a aplicação FastAPI, configura a conexão com o banco de dados SQLite,
+define o modelo de dados para mensagens, cria a tabela no banco (caso não exista),
+e expõe uma rota de exemplo para consulta de mensagens.
+
+Fluxo principal:
+- Criação da instância FastAPI
+- Configuração do banco de dados SQLite
+- Definição do modelo Message
+- Criação da tabela no banco
+- Criação da sessão de banco de dados
+- Definição da rota '/hello'
+"""
+
 from fastapi import FastAPI, Depends
 from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
