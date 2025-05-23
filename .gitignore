@@ -1,0 +1,43 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+.env/
+.env.*  # cobre .env.local, .env.dev, etc.
+
+# SQLite database
+*.db
+
+# VS Code settings
+.vscode/
+
+# Docker
+*.pid
+*.log
+
+# Pytest
+.cache/
+.pytest_cache/
+
+# mypy
+.mypy_cache/
+
+# Coverage reports
+htmlcov/
+.coverage
+coverage.xml
+
+# MacOS
+.DS_Store
+
+# Python egg
+*.egg-info/
+*.egg
+dist/
+build/
+
+# Jupyter Notebook checkpoints (caso use)
+.ipynb_checkpoints/
