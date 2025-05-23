@@ -1,31 +1,24 @@
+from dotenv import load_dotenv
 import os
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from app.models import Base, create_db
 
-# Lê variáveis de ambiente do Docker (.env)
-POSTGRES_USER = os.getenv("POSTGRES_USER", "admin")
-POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD", "admin")
-POSTGRES_DB = os.getenv("POSTGRES_DB", "chatdb")
-POSTGRES_HOST = os.getenv("POSTGRES_HOST", "db")
-POSTGRES_PORT = os.getenv("POSTGRES_PORT", "5432")
+load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '..', '.env'))
 
-# URL do banco PostgreSQL
-DATABASE_URL = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}"
+from fastapi import FastAPI, Depends
+from sqlalchemy import create_engine, Column, Integer, String
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker, Session
 
-# Criar conexão com o banco
+POSTGRES_USER = os.getenv("POSTGRES_USER")
+POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD")
+POSTGRES_DB = os.getenv("POSTGRES_DB")
+POSTGRES_HOST = os.getenv("POSTGRES_HOST")
+POSTGRES_PORT = os.getenv("POSTGRES_PORT")
+
+DATABASE_URL = (
+    f"postgresql+psycopg2://{POSTGRES_USER}:{POSTGRES_PASSWORD}"
+    f"@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}"
+)
+
+app = FastAPI()
 engine = create_engine(DATABASE_URL)
-
-# Sessão do banco
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-# Função para obter a sessão
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
-# Criar o banco de dados (as tabelas definidas no Base)
-create_db(engine)
+Base = declarative_base()
