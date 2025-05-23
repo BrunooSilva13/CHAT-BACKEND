@@ -5,6 +5,8 @@ __pycache__/
 
 # Virtual environment
 venv/
+app/.env
+**/.env
 .env/
 .env.*  # cobre .env.local, .env.dev, etc.
 
