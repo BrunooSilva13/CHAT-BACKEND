@@ -43,3 +43,4 @@ build/
 
 # Jupyter Notebook checkpoints (caso use)
 .ipynb_checkpoints/
+chat.db

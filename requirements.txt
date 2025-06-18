@@ -3,4 +3,5 @@ uvicorn
 sqlalchemy
 aiofiles
 psycopg2-binary
+python-dotenv
 
