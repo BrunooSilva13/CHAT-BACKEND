@@ -2,7 +2,7 @@ from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
 from .database import engine, Base, get_db
 from .models import Message
-from .schemas import MessageCreate, MessageRead
+from .schemas import MessageCreate, MessageRead, MessageUpdate
 from fastapi import HTTPException
 
 app = FastAPI()
@@ -12,6 +12,16 @@ Base.metadata.create_all(bind=engine)
 def create_message(message: MessageCreate, db: Session = Depends(get_db)):
     db_message = Message(content=message.content)
     db.add(db_message)
+    db.commit()
+    db.refresh(db_message)
+    return db_message
+
+@app.put("/messages/{message_id}", response_model=MessageRead)
+def update_message(message_id: int, message: MessageUpdate, db: Session = Depends(get_db)):
+    db_message = db.query(Message).filter(Message.id == message_id).first()
+    if not db_message:
+        raise HTTPException(status_code=404, detail="Mensagem não encontrada")
+    db_message.content = message.content
     db.commit()
     db.refresh(db_message)
     return db_message

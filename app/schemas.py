@@ -9,3 +9,6 @@ class MessageRead(BaseModel):
 
     class Config:
         orm_mode = True
+
+class MessageUpdate(BaseModel):
+    content: str
